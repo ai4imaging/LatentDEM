@@ -1,16 +1,69 @@
-# Nerfies
+# LatentDEM: Blind Inversion using Latent Diffusion Priors
 
-This is the repository that contains source code for the [Nerfies website](https://nerfies.github.io).
+[![Paper](https://img.shields.io/badge/arXiv-2407.01027-b31b1b.svg)](https://arxiv.org/abs/2407.01027)
 
-If you find Nerfies useful for your work please cite:
+This repository provides the official `PyTorch` implementation for the paper **Blind Inversion using Latent Diffusion Priors**.
+
+LatentDEM is the first framework to solve blind inverse problems by leveraging pre-trained *latent* diffusion models. All experiments presented were performed using Stable Diffusion v1.5.
+
+## ⚙️ Getting Started
+
+Our implementation is built directly upon the [PSLD repository](https://github.com/LituRout/PSLD). Follow these steps to set up the environment.
+
+### 1. Clone the Repository
+Clone this repository, which includes the core PSLD framework and our modifications.
+```bash
+git clone [Your Repository URL]
+cd [Repository Folder]
 ```
-@article{park2021nerfies
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+
+### 2. Set Up the Environment
+We provide a Conda environment file. Use it to install the required dependencies.
+```bash
+# Navigate to the stable-diffusion directory
+cd stable-diffusion
+# Create and activate the conda environment
+conda env create -f environment.yml
+conda activate ldm
+```
+Note: Before proceeding, ensure that the base samplers for both [DPS](https://github.com/DPS2022/diffusion-posterior-sampling) and Stable Diffusion are functioning correctly as per the original PSLD instructions.
+
+### 3. Download Pre-trained Model
+Download the Stable Diffusion v1.5 checkpoint into the `stable-diffusion` directory and put it into '/stable-diffusion/models/ldm/stable-diffusion-v1/'
+```bash
+wget [https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt](https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt)
+```
+
+## 🚀 Running Experiments
+
+All experiment scripts are designed to be run from within the stable-diffusion directory.
+
+Important: Before executing, please edit the shell scripts in `stable-diffusion/runforlatentDEM/` to set the outdir variable to your desired output path.
+
+### Blind Deblurring
+
+To reproduce the blind deblurring results from the paper, execute the following commands:
+```bash
+sh runforlatentDEM/inverse_mb_girl.sh
+sh runforlatentDEM/inverse_mb_Macaron.sh
+sh runforlatentDEM/inverse_mb_man.sh
+sh runforlatentDEM/inverse_mb_plant.sh
+```
+
+## 📂 Repository Structure
+
+1. `stable-diffusion/runforlatentDEM/`: Contains all executable shell scripts for reproducing experiments.
+
+2. `diffusion-posterior-sampling/dataforlatentDEM/`: Contains the image data used for the paper's experiments.
+
+
+## Citation
+If you find our work useful in your research, please consider citing:
+```
+@article{bai2024blind,
+  title={Blind inversion using latent diffusion priors},
+  author={Bai, Weimin and Chen, Siyi and Chen, Wenzheng and Sun, He},
+  journal={arXiv preprint arXiv:2407.01027},
+  year={2024}
 }
 ```
-
-# Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
